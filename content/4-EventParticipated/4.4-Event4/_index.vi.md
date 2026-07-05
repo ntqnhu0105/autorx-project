@@ -112,4 +112,9 @@ Tham gia workshop **“FCAJ Community Day”** là một trải nghiệm rất b
 
 #### Một số hình ảnh khi tham gia sự kiện
 * Thêm các hình ảnh của các bạn tại đây
-> Tổng thể, sự kiện mang đến cái nhìn toàn diện về xu hướng AI Agents trên nền tảng AWS, từ vận hành hệ thống, Voice AI, DevOps đến quản trị doanh nghiệp. Thông qua các phiên chia sẻ của chuyên gia và nhiều demo thực tế, người tham dự hiểu rõ hơn cách thiết kế, triển khai và ứng dụng AI an toàn, hiệu quả trong môi trường doanh nghiệp, đồng thời cập nhật những công nghệ và giải pháp mới của AWS.
+
+---
+
+### Tổng thể
+
+Sự kiện mang đến cái nhìn toàn diện về xu hướng AI Agents trên nền tảng AWS, từ vận hành hệ thống, Voice AI, DevOps đến quản trị doanh nghiệp. Thông qua các phiên chia sẻ của chuyên gia và nhiều demo thực tế, người tham dự hiểu rõ hơn cách thiết kế, triển khai và ứng dụng AI an toàn, hiệu quả trong môi trường doanh nghiệp, đồng thời cập nhật những công nghệ và giải pháp mới của AWS.

@@ -7,7 +7,7 @@ pre: " <b> 4.4. </b> "
 ---
 
 
-# FCAJ Community Day Report
+# FCAJ Community Day - Event Report
 
 ## Event Objectives
 
@@ -139,7 +139,7 @@ Participating in the **FCAJ Community Day workshop** was a highly valuable exper
 
 ---
 
-## Visual Experience
+## Event Photos
 
 *(Add event photos here)*
 
@@ -147,4 +147,4 @@ Participating in the **FCAJ Community Day workshop** was a highly valuable exper
 
 ## Conclusion
 
->Overall, the event provided a comprehensive view of AI Agent trends on AWS, including system operations, Voice AI, DevOps, and enterprise management. Through expert sessions and hands-on demos, participants gained a deeper understanding of how to design, deploy, and operate AI systems securely and effectively in enterprise environments while staying up to date with the latest AWS technologies and solutions.
+Overall, the event provided a comprehensive view of AI Agent trends on AWS, including system operations, Voice AI, DevOps, and enterprise management. Through expert sessions and hands-on demos, participants gained a deeper understanding of how to design, deploy, and operate AI systems securely and effectively in enterprise environments while staying up to date with the latest AWS technologies and solutions.

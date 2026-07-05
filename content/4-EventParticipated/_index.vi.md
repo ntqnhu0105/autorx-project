@@ -1,6 +1,6 @@
 ---
 title: "Các events đã tham gia"
-date: 2024-01-01
+date: 2026-07-05
 weight: 4
 chapter: false
 pre: " <b> 4. </b> "
@@ -33,7 +33,7 @@ Trong quá trình thực tập, em đã tham gia 2 events, với mỗi event là
 
 
 ### [Event 2](4.2-Event2/)
-&emsp;**Tên sự kiện:** GenAI-powered App-DB Modernization workshop
+&emsp;**Tên sự kiện:** FCAJ Community Day
 
 &emsp;**Thời gian:** 09:00 ngày 23/05/2026
 

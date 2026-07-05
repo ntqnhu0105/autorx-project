@@ -17,7 +17,7 @@ chapter: false
 
 &emsp; **University:** Ho Chi Minh City University of Technology
 
-&emsp; **Major:** Information Technology
+&emsp; **Major:** Software Engineering
 
 &emsp; **Class:** 22DTHC2
 
