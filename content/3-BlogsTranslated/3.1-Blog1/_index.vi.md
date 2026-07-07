@@ -1,126 +1,93 @@
 ---
 title: "Blog 1"
-date: 2024-01-01
+date: 2026-07-08
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+# Xây dựng kiến trúc Multi-Region Active-Active với Amazon CloudFront
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+Các ứng dụng hiện đại ngày càng được triển khai trên nhiều AWS Region nhằm tăng tính sẵn sàng và giảm độ trễ cho người dùng trên toàn cầu. Tuy nhiên, việc triển khai backend trên nhiều Region chỉ là bước đầu. Một trong những thách thức lớn hơn là làm thế nào để người dùng luôn được kết nối đến Region phù hợp nhất mà không cần thay đổi địa chỉ truy cập.
 
----
+Amazon CloudFront giúp đưa nội dung đến gần người dùng thông qua mạng lưới Edge Location toàn cầu. Tuy nhiên, khi Origin của CloudFront là **Amazon API Gateway Custom Domain**, việc lựa chọn Region dựa trên độ trễ (Latency-Based Routing) không được hỗ trợ trực tiếp.
 
-## Hướng dẫn kiến trúc
-
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
-
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
-
-**Kiến trúc giải pháp bây giờ như sau:**
-
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
+Trong bài viết này, AWS giới thiệu một kiến trúc giúp kết hợp **Amazon CloudFront**, **Amazon Route 53**, **Amazon API Gateway** và **AWS Certificate Manager (ACM)** để xây dựng hệ thống **Multi-Region Active-Active**. Giải pháp này cho phép CloudFront vẫn sử dụng một endpoint duy nhất, trong khi Route 53 sẽ tự động định tuyến request đến Region có độ trễ thấp nhất.
 
 ---
 
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
+## Kiến trúc tổng thể
 
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
+Để hiện thực kiến trúc này, AWS bổ sung thêm một lớp định tuyến DNS phía sau CloudFront thay vì để CloudFront truy cập trực tiếp đến API Gateway của từng Region.
 
----
+Thông qua Route 53, CloudFront chỉ cần giao tiếp với một tên miền duy nhất. Việc lựa chọn Region sẽ được Route 53 thực hiện bằng chính sách **Latency-Based Routing**, giúp người dùng luôn được chuyển đến Region có thời gian phản hồi tốt nhất.
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
+![Blog1](/images/3-BlogsTranslated/Blog1_1.jpg)
 
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+> *Hình 1. Kiến trúc Multi-Region Active-Active sử dụng CloudFront, Route 53 và API Gateway Custom Domain.*
 
 ---
 
-## The pub/sub hub
+## Cấu hình DNS trong kiến trúc
 
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
+Điểm quan trọng nhất của giải pháp nằm ở cách tổ chức DNS.
 
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
+Thay vì cấu hình CloudFront trỏ trực tiếp đến API Gateway của từng Region, AWS sử dụng hai lớp tên miền:
 
----
+- Domain chính (`example.com`) được cấu hình trong Route 53 và trỏ đến CloudFront Distribution.
+- Origin Domain (`api.example.com`) được CloudFront sử dụng để truy cập backend.
 
-## Core microservice
+Đối với `api.example.com`, Route 53 tạo nhiều bản ghi **Latency-Based Routing**, mỗi bản ghi tương ứng với một API Gateway Custom Domain của từng Region.
 
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
+Ngoài ra, mỗi API Gateway Custom Domain đều được cấu hình chứng chỉ TLS riêng thông qua **AWS Certificate Manager (ACM)** để đảm bảo kết nối HTTPS giữa CloudFront và backend.
 
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
+Cách tổ chức này giúp việc bổ sung hoặc loại bỏ Region trở nên đơn giản mà không ảnh hưởng đến người dùng cuối.
 
 ---
 
-## Front door microservice
+## Luồng xử lý request
 
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
+Sau khi hoàn tất cấu hình DNS, request của người dùng sẽ được xử lý theo trình tự sau.
+
+![Blog1](/images/3-BlogsTranslated/Blog1_2.jpg)
+
+> *Hình 2. Luồng định tuyến request từ người dùng đến Region có độ trễ thấp nhất.*
+
+Bước 1: Người dùng truy cập tên miền của ứng dụng (`example.com`).
+
+Bước 2: Route 53 trả về địa chỉ của CloudFront Distribution.
+
+Bước 3: Request được chuyển đến Edge Location gần người dùng nhất.
+
+Bước 4: CloudFront tiếp tục truy vấn Route 53 thông qua Origin Domain (`api.example.com`).
+
+Bước 5: Route 53 sử dụng **Latency-Based Routing** để lựa chọn API Gateway Custom Domain thuộc Region có độ trễ thấp nhất, sau đó request được chuyển đến backend để xử lý.
+
+Toàn bộ quá trình diễn ra hoàn toàn tự động và minh bạch đối với người dùng.
 
 ---
 
-## Staging ER7 microservice
+## Những điểm cần lưu ý khi triển khai
 
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
+Giải pháp của AWS mang lại nhiều lợi ích, tuy nhiên cũng có một số điểm cần cân nhắc:
+
+- Mỗi Region cần triển khai API Gateway và Custom Domain riêng.
+- Mỗi Custom Domain phải được cấp chứng chỉ TLS bằng AWS Certificate Manager.
+- Route 53 đóng vai trò trung tâm trong việc định tuyến giữa các Region.
+- CloudFront chỉ làm nhiệm vụ tiếp nhận request và chuyển tiếp đến Origin Domain, không trực tiếp quyết định Region nào sẽ xử lý request.
+- Việc đồng bộ dữ liệu giữa các Region cần được thiết kế riêng tùy theo yêu cầu của ứng dụng.
 
 ---
 
-## Tính năng mới trong giải pháp
+## Lợi ích của kiến trúc
 
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+Việc bổ sung thêm lớp Route 53 phía sau CloudFront giúp giải quyết hạn chế của API Gateway Custom Domain khi triển khai Multi-Region.
+
+Kiến trúc này mang lại nhiều lợi ích:
+
+- Người dùng luôn được phục vụ từ Region có độ trễ thấp nhất.
+- Hệ thống vẫn duy trì hoạt động khi một Region gặp sự cố.
+- Chỉ cần một tên miền duy nhất cho toàn bộ ứng dụng.
+- Dễ dàng mở rộng sang nhiều Region trong tương lai.
+- Tận dụng được mạng lưới Edge Location của CloudFront để giảm thời gian phản hồi.

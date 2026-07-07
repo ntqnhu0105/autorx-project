@@ -1,126 +1,93 @@
 ---
 title: "Blog 1"
-date: 2024-01-01
+date: 2026-07-08
 weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# Getting Started with Healthcare Data Lakes: Using Microservices
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
+# Latency-Based Routing: Leveraging Amazon CloudFront for a Multi-Region Active-Active Architecture
 
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, *“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”*, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+Modern applications are increasingly deployed across multiple AWS Regions to improve availability and reduce latency for users around the world. However, deploying backend services in multiple Regions is only the first step. A greater challenge is ensuring that users are always connected to the most appropriate Region without changing the application's endpoint.
 
----
+Amazon CloudFront delivers content closer to users through its global network of Edge Locations. However, when the CloudFront origin is an **Amazon API Gateway Custom Domain**, direct support for **Latency-Based Routing** is not available.
 
-## Architecture Guidance
-
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
-
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
-
-**The solution architecture is now as follows:**
-
-> *Figure 1. Overall architecture; colored boxes represent distinct services.*
+In this article, AWS introduces an architecture that combines **Amazon CloudFront**, **Amazon Route 53**, **Amazon API Gateway**, and **AWS Certificate Manager (ACM)** to build a **Multi-Region Active-Active** solution. This approach allows CloudFront to continue using a single origin endpoint, while Route 53 automatically routes requests to the Region with the lowest latency.
 
 ---
 
-While the term *microservices* has some inherent ambiguity, certain traits are common:  
-- Small, autonomous, loosely coupled  
-- Reusable, communicating through well-defined interfaces  
-- Specialized to do one thing well  
-- Often implemented in an **event-driven architecture**
+## Overall Architecture
 
-When determining where to draw boundaries between microservices, consider:  
-- **Intrinsic**: technology used, performance, reliability, scalability  
-- **Extrinsic**: dependent functionality, rate of change, reusability  
-- **Human**: team ownership, managing *cognitive load*
+To implement this architecture, AWS introduces an additional DNS routing layer behind CloudFront instead of allowing CloudFront to connect directly to the API Gateway endpoint in each Region.
 
----
+CloudFront communicates with a single origin domain, while Route 53 uses **Latency-Based Routing** to determine which Region should handle each request based on network latency.
 
-## Technology Choices and Communication Scope
+![Blog1](/images/3-BlogsTranslated/Blog1_1.jpg)
 
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+> *Figure 1. Multi-Region Active-Active architecture using CloudFront, Route 53, and API Gateway Custom Domains.*
 
 ---
 
-## The Pub/Sub Hub
+## DNS Configuration
 
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.  
-- Each microservice depends only on the *hub*  
-- Inter-microservice connections are limited to the contents of the published message  
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous *push*
+The key to this solution lies in its DNS design.
 
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
+Instead of configuring CloudFront to point directly to API Gateway endpoints in individual Regions, AWS uses two separate domain names:
 
----
+- The primary domain (`example.com`) is configured in Route 53 and points to the CloudFront distribution.
+- The origin domain (`api.example.com`) is used by CloudFront to access backend services.
 
-## Core Microservice
+For `api.example.com`, Route 53 creates multiple **Latency-Based Routing** records, with each record pointing to an API Gateway Custom Domain deployed in a different AWS Region.
 
-Provides foundational data and communication layer, including:  
-- **Amazon S3** bucket for data  
-- **Amazon DynamoDB** for data catalog  
-- **AWS Lambda** to write messages into the data lake and catalog  
-- **Amazon SNS** topic as the *hub*  
-- **Amazon S3** bucket for artifacts such as Lambda code
+In addition, every API Gateway Custom Domain is configured with its own TLS certificate using **AWS Certificate Manager (ACM)** to ensure secure HTTPS communication between CloudFront and the backend services.
 
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
+This DNS architecture makes it easy to add or remove Regions without affecting end users.
 
 ---
 
-## Front Door Microservice
+## Request Flow
 
-- Provides an API Gateway for external REST interaction  
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**  
-- Self-managed *deduplication* mechanism using DynamoDB instead of SNS FIFO because:  
-  1. SNS deduplication TTL is only 5 minutes  
-  2. SNS FIFO requires SQS FIFO  
-  3. Ability to proactively notify the sender that the message is a duplicate  
+Once the DNS configuration is complete, requests are processed through the following sequence.
+
+![Blog1](/images/3-BlogsTranslated/Blog1_2.jpg)
+
+> *Figure 2. Request routing from users to the Region with the lowest latency.*
+
+**Step 1:** A user accesses the application domain (`example.com`).
+
+**Step 2:** Route 53 returns the address of the CloudFront distribution.
+
+**Step 3:** The request is routed to the nearest CloudFront Edge Location.
+
+**Step 4:** CloudFront queries Route 53 using the origin domain (`api.example.com`).
+
+**Step 5:** Route 53 applies **Latency-Based Routing** to select the API Gateway Custom Domain in the Region with the lowest latency, and the request is forwarded to the appropriate backend service for processing.
+
+This entire routing process is automatic and completely transparent to end users.
 
 ---
 
-## Staging ER7 Microservice
+## Deployment Considerations
 
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute  
-- Step Functions Express Workflow to convert ER7 → JSON  
-- Two Lambdas:  
-  1. Fix ER7 formatting (newline, carriage return)  
-  2. Parsing logic  
-- Result or error is pushed back into the pub/sub hub  
+Although this architecture provides significant benefits, there are several important considerations:
+
+- Each AWS Region must have its own API Gateway deployment and Custom Domain.
+- Every Custom Domain requires a TLS certificate issued through **AWS Certificate Manager (ACM)**.
+- Route 53 acts as the central routing layer between Regions.
+- CloudFront is responsible only for receiving client requests and forwarding them to the origin domain—it does not determine which Region processes the request.
+- Data synchronization across Regions must be designed separately based on the application's requirements.
 
 ---
 
-## New Features in the Solution
+## Benefits of the Architecture
 
-### 1. AWS CloudFormation Cross-Stack References
-Example *outputs* in the core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+Adding Route 53 as a routing layer behind CloudFront overcomes the limitations of API Gateway Custom Domains in Multi-Region deployments.
+
+This architecture offers several advantages:
+
+- Users are automatically routed to the AWS Region with the lowest latency.
+- The application remains available even if an entire Region becomes unavailable.
+- A single public domain serves the entire application.
+- The architecture can be easily expanded to additional AWS Regions in the future.
+- CloudFront's global Edge Location network helps reduce response times and improve the user experience.
