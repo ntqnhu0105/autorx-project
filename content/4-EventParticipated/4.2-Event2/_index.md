@@ -8,7 +8,7 @@ pre: " <b> 4.2. </b> "
 
 # FCAJ Community Day - Event Report
 
-### Purpose of the Event
+### Event Objectives
 
 - Share knowledge about Artificial Intelligence (AI), Cloud Computing, and emerging technologies on AWS.
 - Introduce real-world applications and deployment architectures through live demonstrations.
@@ -114,7 +114,8 @@ Participating in the **"FCAJ Community Day (23/05)"** workshop was a valuable ex
 
 ### Event Photos
 
-*Insert photos taken during the event here.*
+![Event Photos](/images/4-EventParticipated/Event2_1.jpg)
+![Event Photos](/images/4-EventParticipated/Event2_2.jpg)
 
 ---
 

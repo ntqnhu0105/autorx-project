@@ -7,55 +7,48 @@ pre: " <b> 4. </b> "
 ---
 
 
-> In this section, you should list and describe in detail the events you have participated in during your internship or work experience.  
-> 
-> Each event should be presented in the format Event 1, Event 2, Event 3…, along with the following details:
-> * Event name
-> * Date and time
-> * Location (if applicable)
-> * Your role in the event (attendee, event support, speaker, etc.)
-> * A brief description of the event’s content and main activities
-> * Outcomes or value gained (lessons learned, new skills, contribution to the team/project)
-> * This listing helps demonstrate your actual participation as well as the soft skills and experience you have gained from each event.
+During my internship, I participated in **four events**, each of which provided memorable experiences, valuable knowledge, and meaningful learning opportunities. Besides gaining new insights, I also enjoyed receiving event souvenirs and creating unforgettable memories with the FCAJ community.
 
-During my internship, I participated in two events. Each one was a memorable experience that provided new, interesting, and useful knowledge, along with gifts and wonderful moments.
+One of the most memorable milestones was having the opportunity to stand in front of **more than 100 members** of the FCAJ community as a **speaker**, where I shared both technical knowledge and my own learning journey and experiences.
 
-### [Event 1](4.1-Event1/)  
-&emsp;**Event Name:** GenAI-powered App-DB Modernization workshop  
+### [Event 1](4.1-Event1/)
+&emsp;**Event:** FCAJ Community Day
 
-&emsp;**Date & Time:** 09:00, August 13, 2025  
+&emsp;**Date & Time:** 9:00 AM, May 9, 2026
 
-&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City  
+&emsp;**Venue:** 26th Floor, Bitexco Financial Tower, 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City, Vietnam
 
-&emsp;**Role:** Attendee  
+&emsp;**Role:** Attendee
 
 ---
 
-### [Event 2](4.2-Event2/)  
-&emsp;**Event Name:** GenAI-powered App-DB Modernization workshop  
+### [Event 2](4.2-Event2/)
+&emsp;**Event:** FCAJ Community Day
 
-&emsp;**Date & Time:** 09:00, August 13, 2025  
+&emsp;**Date & Time:** 9:00 AM, May 23, 2026
 
-&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City  
+&emsp;**Venue:** 26th Floor, Bitexco Financial Tower, 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City, Vietnam
 
-&emsp;**Role:** Attendee  
+&emsp;**Role:** Attendee
 
+---
 
-### [Event 3](4.3-Event3/) 
-&emsp;**Event Name:** GenAI-powered App-DB Modernization workshop  
+### [Event 3](4.3-Event3/)
+&emsp;**Event:** FCAJ Meetup
 
-&emsp;**Date & Time:** 09:00, August 13, 2025  
+&emsp;**Date & Time:** 9:00 AM, May 30, 2026
 
-&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City  
+&emsp;**Venue:** 26th Floor, Bitexco Financial Tower, 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City, Vietnam
 
-&emsp;**Role:** Attendee  
+&emsp;**Role:** Speaker
 
+---
 
-### [Event 4](4.4-Event4/)  
-&emsp;**Event Name:** GenAI-powered App-DB Modernization workshop  
+### [Event 4](4.4-Event4/)
+&emsp;**Event:** FCAJ Community Day
 
-&emsp;**Date & Time:** 09:00, August 13, 2025  
+&emsp;**Date & Time:** 9:00 AM, June 27, 2026
 
-&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City  
+&emsp;**Venue:** 26th Floor, Bitexco Financial Tower, 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City, Vietnam
 
 &emsp;**Role:** Attendee  

@@ -6,121 +6,123 @@ chapter: false
 pre: " <b> 4.1. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
-
-# Summary Report: “GenAI-powered App-DB Modernization workshop”
+# FCAJ Community Day - Event Report
 
 ### Event Objectives
 
-- Share best practices in modern application design
-- Introduce Domain-Driven Design (DDD) and event-driven architecture
-- Provide guidance on selecting the right compute services
-- Present AI tools to support the development lifecycle
+- Share learning and self-development mindsets in the AI era.
+- Demonstrate how to effectively leverage AI and Large Language Models (LLMs) for learning, work, and software development.
+- Introduce a modern software development workflow that combines Agile methodologies with AI Agents.
+- Equip participants with the skills and mindset needed to thrive in AI-driven workplaces.
 
-### Speakers
+### Speakers List
 
-- **Jignesh Shah** – Director, Open Source Databases
-- **Erica Liu** – Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** – Assc. Specialist SA, Serverless Amazon Web Services
+- **Long Huynh** – Program Administrator, FCAJ
+- **Thinh Nguyen** – DevOps/Cloud Engineer, FCAJ
+- **Khang** – Solution Architect, Cloud Kinetics
+- **Thao Nguyen** – Software Developer, VIB
 
 ### Key Highlights
 
-#### Identifying the drawbacks of legacy application architecture
+#### The Science of Learning in the AI Era
 
-- Long product release cycles → Lost revenue/missed opportunities  
-- Inefficient operations → Reduced productivity, higher costs  
-- Non-compliance with security regulations → Security breaches, loss of reputation  
+- Explained why the human brain naturally prioritizes **social media** over studying.
+- Demonstrated how the **dopamine reward system** can be leveraged to make learning more engaging.
+- Shared practical **brain hacks** for maintaining motivation and building consistent learning habits.
+- Showed how principles behind social media platforms can be applied to create effective learning routines.
 
-#### Transitioning to modern application architecture – Microservices
+#### Automated Prompt Engineering
 
-Migrating to a modular system — each function is an **independent service** communicating via **events**, built on three core pillars:
+- Explained the importance of **Prompt Engineering** in improving LLM output quality.
+- Introduced the essential components of a high-quality **prompt**.
+- Discussed **Token Economics** and strategies for optimizing AI usage costs.
+- Demonstrated **Proptimizer**, a tool for automatically optimizing prompts.
 
-- **Queue Management**: Handle asynchronous tasks  
-- **Caching Strategy**: Optimize performance  
-- **Message Handling**: Flexible inter-service communication  
+#### AI-Ready Freshers
 
-#### Domain-Driven Design (DDD)
+- Analyzed how AI is reshaping today's job market.
+- Highlighted essential qualities such as **Growth Mindset**, **Integrity**, and the habit of asking **"Why?"**.
+- Introduced the **3 Circles of Work** and the **5 Benefits of Work** framework.
+- Explained how companies evaluate candidates in the AI era.
 
-- **Four-step method**: Identify domain events → arrange timeline → identify actors → define bounded contexts  
-- **Bookstore case study**: Demonstrates real-world DDD application  
-- **Context mapping**: 7 patterns for integrating bounded contexts  
+#### BMAD Method – AI-Driven Development
 
-#### Event-Driven Architecture
+- Explained the transition from **Prompt Engineering** to **Context Engineering**.
+- Introduced the **BMAD (Breakthrough Method for Agile AI-Driven Development)** framework.
+- Demonstrated an end-to-end software development workflow covering requirement analysis, system design, implementation, and testing using AI Agents.
+- Showed how **Multi-Agent** collaboration reduces hallucinations and improves software quality.
 
-- **3 integration patterns**: Publish/Subscribe, Point-to-point, Streaming  
-- **Benefits**: Loose coupling, scalability, resilience  
-- **Sync vs async comparison**: Understanding the trade-offs  
-
-#### Compute Evolution
-
-- **Shared Responsibility Model**: EC2 → ECS → Fargate → Lambda  
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value  
-- **Functions vs Containers**: Criteria for appropriate choice  
-
-#### Amazon Q Developer
-
-- **SDLC automation**: From planning to maintenance  
-- **Code transformation**: Java upgrade, .NET modernization  
-- **AWS Transform agents**: VMware, Mainframe, .NET migration  
+---
 
 ### Key Takeaways
 
-#### Design Mindset
+#### Learning Mindset
 
-- **Business-first approach**: Always start from the business domain, not the technology  
-- **Ubiquitous language**: Importance of a shared vocabulary between business and tech teams  
-- **Bounded contexts**: Identifying and managing complexity in large systems  
+- Gained a better understanding of how to build effective learning habits based on how the brain works.
+- Developed a stronger **Growth Mindset** and lifelong learning approach for the AI era.
+- Learned to use AI as a supportive tool rather than becoming overly dependent on it.
 
-#### Technical Architecture
+#### AI & Prompt Engineering
 
-- **Event storming technique**: Practical method for modeling business processes  
-- Use **event-driven communication** instead of synchronous calls  
-- **Integration patterns**: When to use sync, async, pub/sub, streaming  
-- **Compute spectrum**: Criteria for choosing between VM, containers, and serverless  
+- Learned how to write effective prompts to improve LLM responses.
+- Understood the relationship between **context**, **prompt**, and output quality.
+- Learned how to optimize token usage to balance performance and cost.
 
-#### Modernization Strategy
+#### AI-Driven Software Development
 
-- **Phased approach**: No rushing — follow a clear roadmap  
-- **7Rs framework**: Multiple modernization paths depending on the application  
-- **ROI measurement**: Cost reduction + business agility  
+- Understood the differences between **Prompt Engineering** and **Context Engineering**.
+- Learned the software development workflow based on the **BMAD Method**.
+- Gained insight into how multiple AI Agents can collaborate throughout the Software Development Lifecycle (SDLC).
 
-### Applying to Work
+### Applying the Knowledge
 
-- **Apply DDD** to current projects: Event storming sessions with business teams  
-- **Refactor microservices**: Use bounded contexts to define service boundaries  
-- **Implement event-driven patterns**: Replace some sync calls with async messaging  
-- **Adopt serverless**: Pilot AWS Lambda for suitable use cases  
-- **Try Amazon Q Developer**: Integrate into the dev workflow to boost productivity  
+- Apply dopamine-based learning principles to build more effective study plans.
+- Use **Prompt Engineering** techniques to improve interactions with ChatGPT and other LLMs.
+- Apply **Context Engineering** when developing AI Assistants or AI Agents.
+- Experiment with the **BMAD Method** to improve productivity in AI-assisted software development.
+- Build multi-agent workflows for requirement analysis, software development, and testing.
 
 ### Event Experience
 
-Attending the **“GenAI-powered App-DB Modernization”** workshop was extremely valuable, giving me a comprehensive view of modernizing applications and databases using advanced methods and tools. Key experiences included:
+Participating in the **FCAJ Community Day** workshop gave me valuable insights into how AI is transforming learning, the workplace, and modern software development. The sessions combined theory with practical demonstrations, making the content both engaging and highly applicable.
 
-#### Learning from highly skilled speakers
-- Experts from AWS and major tech organizations shared **best practices** in modern application design.  
-- Through real-world case studies, I gained a deeper understanding of applying **DDD** and **Event-Driven Architecture** to large projects.  
+#### Learning from Industry Experts
 
-#### Hands-on technical exposure
-- Participating in **event storming** sessions helped me visualize how to **model business processes** into domain events.  
-- Learned how to **split microservices** and define **bounded contexts** to manage large-system complexity.  
-- Understood trade-offs between **synchronous and asynchronous communication** and integration patterns like **pub/sub, point-to-point, streaming**.  
+- Learned how to use AI effectively by focusing on the right mindset rather than just the tools.
+- Gained practical insights into Prompt Engineering and AI Agent development.
+- Learned strategies for continuous self-improvement in the AI era.
 
-#### Leveraging modern tools
-- Explored **Amazon Q Developer**, an AI tool for SDLC support from planning to maintenance.  
-- Learned to **automate code transformation** and pilot serverless with **AWS Lambda** to improve productivity.  
+#### Hands-on Technical Demonstrations
 
-#### Networking and discussions
-- The workshop offered opportunities to exchange ideas with experts, peers, and business teams, enhancing the **ubiquitous language** between business and tech.  
-- Real-world examples reinforced the importance of the **business-first approach** rather than focusing solely on technology.  
+- Watched a live demonstration of prompt optimization using **Proptimizer**.
+- Observed the software development workflow powered by the **BMAD Method**.
+- Learned how multiple AI Agents collaborate to build complete software solutions.
 
-#### Lessons learned
-- Applying DDD and event-driven patterns reduces **coupling** while improving **scalability** and **resilience**.  
-- Modernization requires a **phased approach** with **ROI measurement**; rushing the process can be risky.  
-- AI tools like Amazon Q Developer can significantly **boost productivity** when integrated into the current workflow.  
+#### Exploring Modern AI Technologies
 
-#### Some event photos
-*Add your event photos here*  
+- Explored practical Prompt Engineering and Context Engineering techniques.
+- Learned about the Multi-Agent approach in software development.
+- Understood how AI can support every stage of the Software Development Lifecycle.
 
-> Overall, the event not only provided technical knowledge but also helped me reshape my thinking about application design, system modernization, and cross-team collaboration.
+#### Networking and Knowledge Sharing
+
+- Had the opportunity to discuss career development in the AI era with the speakers.
+- Exchanged learning experiences and AI application ideas with other participants.
+- Stayed updated with emerging AI trends in learning and software engineering.
+
+#### Lessons Learned
+
+- AI significantly improves productivity, but **critical thinking and context** remain the key factors in achieving high-quality results.
+- **Context Engineering** is becoming increasingly important and, in many cases, more impactful than Prompt Engineering.
+- To fully leverage AI, it is essential to combine domain knowledge, effective questioning skills, and structured development workflows.
+
+#### Event Photos
+
+![Event Photos](/images/4-EventParticipated/Event1_1.jpg)
+![Event Photos](/images/4-EventParticipated/Event1_2.jpg)
+
+---
+
+### Conclusion
+
+The event provided valuable and practical insights into applying AI for learning, personal development, and software engineering. It also helped me better understand how AI can be integrated into modern development workflows to improve productivity, efficiency, and the quality of software solutions.

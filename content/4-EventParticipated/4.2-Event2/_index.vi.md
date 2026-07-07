@@ -110,8 +110,11 @@ Tham gia workshop **“FCAJ Community Day 23/05”** là một trải nghiệm r
 ---
 
 #### Một số hình ảnh khi tham gia sự kiện
-* Thêm các hình ảnh của các bạn tại đây
+
+![Event Photos](/images/4-EventParticipated/Event2_1.jpg)
 
 ---
+
 ### Tổng thể
+
 Sự kiện mang đến góc nhìn toàn diện về **AI, LLM và các dịch vụ AWS**, từ cách xây dựng AI dựa trên context, phát triển AI Assistant với Amazon Quick, tối ưu hệ thống bằng CloudFront đến các ứng dụng Multi-Agent trong doanh nghiệp. Thông qua các phiên chia sẻ và demo thực tế, người tham dự không chỉ cập nhật công nghệ mới mà còn học được tư duy thiết kế, triển khai và ứng dụng AI vào các bài toán thực tế.

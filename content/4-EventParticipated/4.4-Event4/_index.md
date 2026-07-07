@@ -9,14 +9,14 @@ pre: " <b> 4.4. </b> "
 
 # FCAJ Community Day - Event Report
 
-## Event Objectives
+### Event Objectives
 
 - Introduce new AI solutions on AWS.
 - Share AI architecture patterns and enterprise deployment approaches.
 - Demonstrate real-world AI applications through live demos.
 - Optimize business operations, productivity, and costs.
 
-## Speakers List
+### Speakers List
 
 - **Truong Tran** - AI Solution Sales, Noventiq  
 - **Steve Tran** - CTO/Founder, CloudThinker  
@@ -30,9 +30,9 @@ pre: " <b> 4.4. </b> "
 
 ---
 
-## Key Topics
+### Key Highlights
 
-### AI Agents for Cloud Operations Automation
+#### AI Agents for Cloud Operations Automation
 
 - Transition from **alert-driven** to **action-driven operations**
 - **Deep Response Engine** enables automatic incident detection, analysis, and resolution
@@ -41,7 +41,7 @@ pre: " <b> 4.4. </b> "
 
 ---
 
-### Building Voice AI for Enterprises
+#### Building Voice AI for Enterprises
 
 - Evolution from **IVR systems and chatbots** to **AI voice agents**
 - Challenges: **latency, accuracy, and natural conversation quality**
@@ -50,7 +50,7 @@ pre: " <b> 4.4. </b> "
 
 ---
 
-### AI Agents for DevOps Support
+#### AI Agents for DevOps Support
 
 - **AWS DevOps Agent** acts as a 24/7 operational teammate
 - Reduces **MTTD (Mean Time to Detect)** and **MTTR (Mean Time to Recover)**
@@ -59,7 +59,7 @@ pre: " <b> 4.4. </b> "
 
 ---
 
-### AI for Human Resource Optimization
+#### AI for Human Resource Optimization
 
 - AI applied in **workforce planning** and HR management
 - Automates HR processes to improve productivity
@@ -68,7 +68,7 @@ pre: " <b> 4.4. </b> "
 
 ---
 
-### Secure MCP Integration
+#### Secure MCP Integration
 
 - Understanding **Model Context Protocol (MCP)** and its role in extending AI systems
 - Building **private MCP connectivity** via **Amazon Quick**
@@ -79,7 +79,7 @@ pre: " <b> 4.4. </b> "
 
 ## Key Learnings
 
-### AI Agent Design Thinking
+#### AI Agent Design Thinking
 
 - Shift from **monitoring-only systems** to **automated action execution systems**
 - Designing AI agents with **reasoning and multi-agent collaboration**
@@ -87,7 +87,7 @@ pre: " <b> 4.4. </b> "
 
 ---
 
-### AWS AI Architecture
+#### AWS AI Architecture
 
 - Building Voice AI using **Amazon Nova Sonic, Amazon Bedrock**, streaming, and telephony
 - Using **Bedrock AgentCore** for multi-agent workflow design
@@ -95,7 +95,7 @@ pre: " <b> 4.4. </b> "
 
 ---
 
-### Enterprise AI Applications
+#### Enterprise AI Applications
 
 - Applying AI in **DevOps, HR, and Customer Service**
 - Leveraging data for decision-making and operational insights
@@ -103,7 +103,7 @@ pre: " <b> 4.4. </b> "
 
 ---
 
-## Security & Integration
+### Security & Integration
 
 - Understanding the architecture and principles of **Model Context Protocol (MCP)**
 - Setting up secure AI systems using **private VPC connectivity**
@@ -111,11 +111,11 @@ pre: " <b> 4.4. </b> "
 
 ---
 
-## Event Experience
+### Event Experience
 
 Participating in the **FCAJ Community Day workshop** was a highly valuable experience, providing a comprehensive view of modern application and database transformation using advanced tools and methodologies. It also helped in understanding current trends in AI Agents and Generative AI, as well as real-world enterprise AI use cases.
 
-### Learning from Experts
+#### Learning from Experts
 
 - Gained insights into enterprise AI design and deployment thinking
 - Learned best practices in architecture, operations, and security
@@ -123,7 +123,7 @@ Participating in the **FCAJ Community Day workshop** was a highly valuable exper
 
 ---
 
-### Hands-on Technical Experience
+#### Hands-on Technical Experience
 
 - Demo of **Deep Response Engine and AWS DevOps Agent**
 - Voice AI architecture using **Amazon Nova Sonic and Bedrock**
@@ -131,7 +131,7 @@ Participating in the **FCAJ Community Day workshop** was a highly valuable exper
 
 ---
 
-### Key Takeaways
+#### Key Takeaways
 
 - AI Agents are becoming essential automation tools
 - AI must be combined with proper architecture and security to be effective
@@ -141,10 +141,14 @@ Participating in the **FCAJ Community Day workshop** was a highly valuable exper
 
 ## Event Photos
 
-*(Add event photos here)*
+![Event Photos](/images/4-EventParticipated/Event4_1.jpg)
+![Event Photos](/images/4-EventParticipated/Event4_2.jpg)
+![Event Photos](/images/4-EventParticipated/Event4_3.jpg)
+![Event Photos](/images/4-EventParticipated/Event4_4.jpg)
+![Event Photos](/images/4-EventParticipated/Event4_5.jpg)
 
 ---
 
 ## Conclusion
 
-Overall, the event provided a comprehensive view of AI Agent trends on AWS, including system operations, Voice AI, DevOps, and enterprise management. Through expert sessions and hands-on demos, participants gained a deeper understanding of how to design, deploy, and operate AI systems securely and effectively in enterprise environments while staying up to date with the latest AWS technologies and solutions.
+The event provided a comprehensive view of AI Agent trends on AWS, including system operations, Voice AI, DevOps, and enterprise management. Through expert sessions and hands-on demos, participants gained a deeper understanding of how to design, deploy, and operate AI systems securely and effectively in enterprise environments while staying up to date with the latest AWS technologies and solutions.
