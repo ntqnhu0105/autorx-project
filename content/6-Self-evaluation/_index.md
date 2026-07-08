@@ -1,39 +1,52 @@
 ---
 title: "Self-Assessment"
-date: 2024-01-01
+date: 2026-07-08
 weight: 6
 chapter: false
 pre: " <b> 6. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
 
-During my internship at **[Company/Organization Name]** from **[start date]** to **[end date]**, I had the opportunity to learn, practice, and apply the knowledge acquired in school to a real-world working environment.  
-I participated in **[briefly describe the main project or task]**, through which I improved my skills in **[list skills: programming, analysis, reporting, communication, etc.]**.  
+During my internship at **Amazon Web Services Vietnam Co., Ltd.** from **April 17, 2026** to **July 10, 2026**, I had the opportunity to participate in the group project **AutoRx – Smart Vehicle Monitoring and Maintenance Reminder System**. The project is an IoT-based platform that leverages **AWS Serverless** technologies and **Artificial Intelligence** to collect real-time telemetry data, monitor vehicle health, assist in fault diagnosis, and provide proactive maintenance reminders.
 
-In terms of work ethic, I always strived to complete tasks well, complied with workplace regulations, and actively engaged with colleagues to improve work efficiency.
+Through this project, I was able to apply the knowledge I acquired at university to a real-world working environment while improving my software development skills. I also gained practical experience with AWS cloud services, Serverless application development, Git version control, and effective collaboration within a development team.
 
-To objectively reflect on my internship period, I would like to evaluate myself based on the following criteria:
+Regarding my work attitude, I consistently strived to complete assigned tasks on time, followed the team's development process, and actively communicated with my supervisor and teammates to resolve issues that arose during the project. In addition, I always welcomed feedback and continuously improved my work quality and professional skills. Furthermore, during the internship, I had the opportunity to present my work in front of an audience, which significantly improved my presentation and public speaking abilities.
 
-| No. | Criteria                            | Description                                                                                      | Good | Fair | Average |
-| --- | ----------------------------------- | ------------------------------------------------------------------------------------------------ | ---- | ---- | ------- |
-| 1   | **Professional knowledge & skills** | Understanding of the field, applying knowledge in practice, proficiency with tools, work quality | ✅    | ☐    | ☐       |
-| 2   | **Ability to learn**                | Ability to absorb new knowledge and learn quickly                                                | ☐    | ✅    | ☐       |
-| 3   | **Proactiveness**                   | Taking initiative, seeking out tasks without waiting for instructions                            | ✅    | ☐    | ☐       |
-| 4   | **Sense of responsibility**         | Completing tasks on time and ensuring quality                                                    | ✅    | ☐    | ☐       |
-| 5   | **Discipline**                      | Adhering to schedules, rules, and work processes                                                 | ☐    | ☐    | ✅       |
-| 6   | **Progressive mindset**             | Willingness to receive feedback and improve oneself                                              | ☐    | ✅    | ☐       |
-| 7   | **Communication**                   | Presenting ideas and reporting work clearly                                                      | ☐    | ✅    | ☐       |
-| 8   | **Teamwork**                        | Working effectively with colleagues and participating in teams                                   | ✅    | ☐    | ☐       |
-| 9   | **Professional conduct**            | Respecting colleagues, partners, and the work environment                                        | ✅    | ☐    | ☐       |
-| 10  | **Problem-solving skills**          | Identifying problems, proposing solutions, and showing creativity                                | ☐    | ✅    | ☐       |
-| 11  | **Contribution to project/team**    | Work effectiveness, innovative ideas, recognition from the team                                  | ✅    | ☐    | ☐       |
-| 12  | **Overall**                         | General evaluation of the entire internship period                                               | ✅    | ☐    | ☐       |
+To provide an objective reflection of my internship performance, I have conducted the following self-assessment:
+
+
+| No. | Evaluation Criteria | Description | Good | Fair | Average |
+| --- | ------------------- | ----------- | :--: | :--: | :-----: |
+| 1 | **Professional Knowledge and Technical Skills** | Applied academic knowledge to the project and utilized AWS services and web technologies effectively. | ✅ | ☐ | ☐ |
+| 2 | **Learning Ability** | Quickly learned new technologies and adapted to the working environment. | ✅ | ☐ | ☐ |
+| 3 | **Proactiveness** | Actively explored documentation and independently completed assigned tasks. | ✅ | ☐ | ☐ |
+| 4 | **Responsibility** | Completed assigned tasks on schedule while maintaining quality. | ✅ | ☐ | ☐ |
+| 5 | **Discipline** | Complied with company regulations and development processes. | ✅ | ☐ | ☐ |
+| 6 | **Willingness to Improve** | Accepted feedback positively and continuously improved personal performance. | ✅ | ☐ | ☐ |
+| 7 | **Communication Skills** | Communicated effectively with supervisors and team members. | ☐ | ✅ | ☐ |
+| 8 | **Teamwork** | Collaborated efficiently with teammates throughout the project. | ✅ | ☐ | ☐ |
+| 9 | **Professional Conduct** | Demonstrated a positive attitude and respected colleagues and the workplace. | ✅ | ☐ | ☐ |
+| 10 | **Problem-Solving Skills** | Analyzed issues and proposed appropriate solutions during development. | ☐ | ✅ | ☐ |
+| 11 | **Contribution to the Project** | Successfully completed assigned tasks and contributed to the overall project. | ✅ | ☐ | ☐ |
+| 12 | **Overall Performance** | General evaluation of the internship experience. | ✅ | ☐ | ☐ |
+
 
 ### Needs Improvement
 
-* Strengthen discipline and strictly comply with the rules and regulations of the company or any organization  
-* Improve problem-solving thinking  
-* Enhance communication skills in both daily interactions and professional contexts, including handling situations effectively
+Although I gained valuable knowledge and experience during my internship, I recognize several areas that require further improvement:
+
+- Deepen my understanding of **AWS Cloud Architecture** and Serverless technologies.
+- Improve my ability to optimize application performance and implement security best practices.
+- Strengthen my software architecture and system design skills.
+- Be more proactive in proposing technical solutions and innovative ideas during project development.
+- Continue improving my communication and technical presentation skills when working with a team.
+
+---
+
+### Conclusion
+
+My internship at **Amazon Web Services Vietnam Co., Ltd.** provided me with valuable opportunities to experience a professional working environment, apply academic knowledge to real-world projects, and enhance both my technical expertise and soft skills. Through my participation in the **AutoRx** project, I gained a deeper understanding of the software development lifecycle, collaborative teamwork, and the implementation of cloud-native applications using the AWS Serverless architecture.
+
+The knowledge and experience I gained throughout this internship will serve as a strong foundation for my future studies and career development in cloud computing and software engineering.
+
