@@ -1,57 +1,49 @@
 ---
 title: "Week 3 Worklog"
-date: 2024-01-01
+date: 2026-05-10
 weight: 1
 chapter: false
 pre: " <b> 1.3. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
 
 ### Week 3 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Understand how to store and manage data using Amazon S3.
+* Deploy a static website using Amazon S3.
+* Learn Amazon S3 features for data management and performance optimization.
+* Participate in a community event to expand AWS knowledge and build professional connections.
 
 ### Tasks to be carried out this week:
 | Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 2   | - Learn about Amazon S3 <br> - **Hands-on Lab:** <br>&emsp;+ Create an S3 Bucket <br>&emsp;+ Upload objects to the bucket <br>&emsp;+ Manage objects within the bucket | 04/05/2026 | 04/05/2026 | <https://000057.awsstudygroup.com/> |
+| 3   | - Learn how to deploy Static Website Hosting using Amazon S3 <br> - **Hands-on Lab:** <br>&emsp;+ Enable Static Website Hosting <br>&emsp;+ Configure Block Public Access <br>&emsp;+ Grant public read access to objects | 05/05/2026 | 05/05/2026 | <https://000057.awsstudygroup.com/> |
+| 4   | - Verify the deployed website <br> - Learn about Amazon CloudFront CDN <br> - **Hands-on Lab:** <br>&emsp;+ Accelerate the static website using CloudFront <br>&emsp;+ Verify website accessibility and content delivery | 06/05/2026 | 06/05/2026 | <https://000057.awsstudygroup.com/> |
+| 5   | - Learn about S3 Bucket Versioning <br> - **Hands-on Lab:** <br>&emsp;+ Enable bucket versioning <br>&emsp;+ Manage object versions <br>&emsp;+ Move objects using the Amazon S3 console | 07/05/2026 | 07/05/2026 | <https://000057.awsstudygroup.com/> |
+| 7   | - Participate in **FCAJ Community Day** at the AWS Vietnam office <br> - Network with the community and learn about the latest AWS technologies and industry trends | 09/05/2026 | 09/05/2026 | |
 
 
 ### Week 3 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Gained a solid understanding of using Amazon S3 for data storage and management on AWS.
 
-* Successfully created and configured an AWS Free Tier account.
+* Successfully deployed a static website using Amazon S3 Static Website Hosting.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* Learned how to manage data access permissions through:
+  * Block Public Access.
+  * Bucket Policies.
+  * Public object permissions.
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Understood how Amazon CloudFront can be used to:
+  * Deliver content through a global CDN.
+  * Reduce website latency.
+  * Improve the performance of static websites.
 
-* Used AWS CLI to perform basic operations such as:
+* Learned how to manage object versions using Amazon S3 Versioning, including:
+  * Restoring previous object versions.
+  * Managing multiple versions of the same object.
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+* Understood the fundamentals of Cross-Region Replication (CRR) and its benefits for backup, high availability, and disaster recovery.
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Expanded practical knowledge and professional connections by participating in **FCAJ Community Day** at the AWS Vietnam office.

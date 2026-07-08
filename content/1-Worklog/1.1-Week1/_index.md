@@ -1,57 +1,60 @@
 ---
 title: "Week 1 Worklog"
-date: 2024-01-01
+date: 2026-04-26
 weight: 1
 chapter: false
 pre: " <b> 1.1. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
 
 ### Week 1 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Become familiar with the internship environment and the FCAJ community members.
+* Gain an overall understanding of the AWS ecosystem and its global infrastructure.
+* Set up an AWS account following security best practices.
+* Learn how to use AWS management and cost management tools.
 
 ### Tasks to be carried out this week:
 | Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 2   | - Get to know the FCAJ community members <br> - Read and understand the internship rules and regulations | 20/04/2026 | 20/04/2026 | |
+| 3   | - Research and explore the AWS ecosystem <br>&emsp;+ AWS Overview <br>&emsp;+ Core AWS Service Categories <br>&emsp;+ Cloud Computing Fundamentals | 21/04/2026 | 21/04/2026 | <https://www.youtube.com/watch?v=HxYZAK1coOI> <https://www.youtube.com/watch?v=IK59Zdd1poE> |
+| 4   | - Study AWS Global Infrastructure <br>&emsp;+ Regions <br>&emsp;+ Availability Zones <br>&emsp;+ Edge Locations <br> - Learn about AWS management tools <br> - Research AWS cost optimization strategies | 22/04/2026 | 22/04/2026 | <https://www.youtube.com/watch?v=pjr5a-HYAjI> <https://www.youtube.com/watch?v=2PQYqH_HkXw> <https://www.youtube.com/watch?v=IY61YlmXQe8> |
+| 5   | - Create an AWS account <br> - Enable Multi-Factor Authentication (MFA) <br> - Create an Admin Group <br> - Create an Admin User following IAM Best Practices | 23/04/2026 | 23/04/2026 | <https://000001.awsstudygroup.com/> <https://000002.awsstudygroup.com/> |
+| 6   | - Create AWS Budgets for cost management <br>&emsp;+ Cost Budget <br>&emsp;+ Usage Budget <br> - Verify that the budgets have been configured successfully | 24/04/2026 | 24/04/2026 | <https://000007.awsstudygroup.com/> |
 
 
 ### Week 1 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Became familiar with the internship environment, working process, and members of the FCAJ community.
 
-* Successfully created and configured an AWS Free Tier account.
+* Gained a solid understanding of the AWS platform, including:
+  * Core AWS service categories.
+  * Cloud computing fundamentals.
+  * The role of AWS in modern system deployment.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* Learned about AWS Global Infrastructure, including:
+  * Regions.
+  * Availability Zones.
+  * Edge Locations.
+  * The benefits of deploying applications across multiple Regions and Availability Zones.
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Understood and gained initial hands-on experience with AWS management tools.
 
-* Used AWS CLI to perform basic operations such as:
+* Explored AWS cost optimization strategies, including:
+  * Cost monitoring.
+  * Budget management.
+  * Resource usage control.
+  * Applying AWS cost optimization recommendations.
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+* Successfully created an AWS account and configured essential security settings:
+  * Enabled Multi-Factor Authentication (MFA).
+  * Created an Admin Group.
+  * Created an Admin User following IAM least-privilege best practices.
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Configured AWS Budgets for cost monitoring:
+  * Cost Budget.
+  * Usage Budget.
+  * Set up budget alerts for threshold notifications.
+
+* Built a strong foundation in AWS account management, security, and cost management to support hands-on labs and projects in the following weeks.

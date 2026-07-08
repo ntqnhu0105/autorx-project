@@ -115,7 +115,6 @@ Participating in the **"FCAJ Community Day (23/05)"** workshop was a valuable ex
 ### Event Photos
 
 ![Event Photos](/images/4-EventParticipated/Event2_1.jpg)
-![Event Photos](/images/4-EventParticipated/Event2_2.jpg)
 
 ---
 

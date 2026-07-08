@@ -1,59 +1,43 @@
 ---
 title: "Worklog Tuần 11"
-date: 2024-01-01
+date: 2026-07-05
 weight: 2
 chapter: false
 pre: " <b> 1.11. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
 
 ### Mục tiêu tuần 11:
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Tiếp tục phát triển ứng dụng theo kiến trúc Serverless trên AWS.
+* Tìm hiểu quy trình triển khai ứng dụng bằng AWS SAM.
+* Làm quen với dịch vụ xác thực và quản lý người dùng AWS Cognito.
+* Tham gia hỗ trợ thiết kế kiến trúc và triển khai workshop nhóm.
 
 ### Các công việc cần triển khai trong tuần này:
 | Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 2 | - Tiếp tục tìm hiểu kiến trúc Serverless <br> - **Thực hành:** <br>&emsp;+ Xây dựng giao diện Frontend <br>&emsp;+ Gọi API thông qua Amazon API Gateway <br>&emsp;+ Kiểm tra luồng giao tiếp giữa Frontend và Backend Serverless | 29/06/2026 | 29/06/2026 | <https://000079.awsstudygroup.com/> <https://000079.awsstudygroup.com/2-front-end-deployment/> <https://000079.awsstudygroup.com/3-deploy-lambda-function/> <https://000079.awsstudygroup.com/4-config-api-gw/> |
+| 3 | - Tìm hiểu AWS Serverless Application Model (AWS SAM) <br> - **Thực hành:** <br>&emsp;+ Triển khai ứng dụng bằng AWS SAM <br>&emsp;+ Kiểm thử và cập nhật ứng dụng Serverless | 30/06/2026 | 30/06/2026 | <https://000080.awsstudygroup.com/> <https://000080.awsstudygroup.com/5-test-api-by-postman/> <https://000080.awsstudygroup.com/6-test-front-end/>|
+| 4 | - Tìm hiểu AWS Cognito <br>&emsp;+ Xác thực người dùng (Authentication) <br>&emsp;+ Phân quyền (Authorization) <br>&emsp;+ Quản lý người dùng cho ứng dụng Web và Mobile <br> - Hỗ trợ xây dựng kiến trúc cho workshop nhóm | 01/07/2026 | 01/07/2026 | <https://000081.awsstudygroup.com/> <https://000081.awsstudygroup.com/3-create-api-and-lambda-function/> <https://000081.awsstudygroup.com/4-test-front-end/> |
+| 5 | - Hỗ trợ triển khai workshop nhóm <br>&emsp;+ Chuẩn bị môi trường <br>&emsp;+ Hỗ trợ xây dựng kiến trúc và cấu hình các dịch vụ AWS <br>&emsp;+ Kiểm thử nội dung workshop | 02/07/2026 | 02/07/2026 | 
+| 6 | - Tiếp tục hỗ trợ workshop nhóm <br>&emsp;+ Hoàn thiện nội dung thực hành <br>&emsp;+ Kiểm tra các tài nguyên AWS <br>&emsp;+ Hỗ trợ xử lý các vấn đề phát sinh | 03/07/2026 | 03/07/2026 |
 
 
 ### Kết quả đạt được tuần 11:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Hiểu cách xây dựng giao diện Frontend và kết nối với Backend Serverless thông qua Amazon API Gateway.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+* Triển khai thành công ứng dụng Serverless bằng AWS Serverless Application Model (AWS SAM), đồng thời hiểu quy trình đóng gói, triển khai và cập nhật ứng dụng.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+* Hiểu vai trò của AWS Cognito trong việc quản lý danh tính và truy cập:
+  * Xác thực người dùng (Authentication).
+  * Phân quyền truy cập (Authorization).
+  * Quản lý người dùng cho ứng dụng Web và Mobile.
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+* Có khả năng tích hợp AWS Cognito vào ứng dụng nhằm xây dựng quy trình đăng nhập và quản lý người dùng an toàn.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+* Tham gia hỗ trợ thiết kế kiến trúc AWS cho workshop nhóm, góp phần hoàn thiện nội dung và môi trường thực hành.
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
+* Phối hợp cùng các thành viên trong nhóm để chuẩn bị, kiểm thử và hỗ trợ triển khai workshop, nâng cao kỹ năng làm việc nhóm và giải quyết các vấn đề phát sinh trong quá trình chuẩn bị.
 

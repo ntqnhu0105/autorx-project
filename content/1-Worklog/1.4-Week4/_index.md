@@ -1,57 +1,55 @@
 ---
 title: "Week 4 Worklog"
-date: 2024-01-01
+date: 2026-05-17
 weight: 1
 chapter: false
 pre: " <b> 1.4. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
 
 ### Week 4 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Understand how to deploy and manage relational databases using Amazon RDS.
+* Connect applications running on Amazon EC2 to an Amazon RDS database.
+* Learn about backup, restore, and cost optimization strategies.
+* Deploy sample applications on Amazon Lightsail and explore its security features.
+
 
 ### Tasks to be carried out this week:
 | Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 2   | - Learn about Amazon Relational Database Service (Amazon RDS) <br> - Prepare the environment for Amazon RDS deployment <br>&emsp;+ Select a database engine <br>&emsp;+ Design the VPC and Security Groups | 11/05/2026 | 11/05/2026 | <https://000005.awsstudygroup.com/2-prerequiste/> |
+| 3   | - Continue deploying an Amazon EC2 instance <br> - **Hands-on Lab:** <br>&emsp;+ Create an Amazon RDS database instance <br>&emsp;+ Connect the EC2 instance to the RDS database <br>&emsp;+ Deploy an application that uses the RDS database | 12/05/2026 | 12/05/2026 | <https://000005.awsstudygroup.com/3-create-ec2/> <https://000005.awsstudygroup.com/4-create-rds/> |
+| 4   | - Learn about backup and restore in Amazon RDS <br>&emsp;+ Automated Backups <br>&emsp;+ Manual Snapshots <br> - Study cost optimization strategies for Amazon Lightsail | 13/05/2026 | 13/05/2026 | <https://000005.awsstudygroup.com/6-backup/> <https://000045.awsstudygroup.com/> |
+| 5   | - **Hands-on Lab:** <br>&emsp;+ Deploy a Lightsail Database <br>&emsp;+ Configure database connectivity <br>&emsp;+ Deploy a WordPress instance <br>&emsp;+ Configure and verify the website | 14/05/2026 | 14/05/2026 | <https://000045.awsstudygroup.com/1-database/> <https://000045.awsstudygroup.com/2-wp-instance/> |
+| 6   | - **Hands-on Lab:** <br>&emsp;+ Deploy a PrestaShop e-commerce instance <br>&emsp;+ Deploy an Akaunting instance <br>&emsp;+ Verify and configure the applications after deployment | 15/05/2026 | 15/05/2026 | <https://000045.awsstudygroup.com/3-e-commerce-instance/> <https://000045.awsstudygroup.com/4-akaunting-instance/> |
+| 7   | - Continue exploring Amazon Lightsail security features <br>&emsp;+ Firewall <br>&emsp;+ Static IP <br>&emsp;+ SSL/TLS and security best practices | 16/05/2026 | 16/05/2026 | <https://000045.awsstudygroup.com/5-secure-the-applications/> |
 
 
 ### Week 4 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Gained a solid understanding of deploying and managing relational databases using Amazon RDS.
 
-* Successfully created and configured an AWS Free Tier account.
+* Successfully deployed an Amazon RDS database instance and connected it to an application running on Amazon EC2.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* Learned the backup and recovery mechanisms provided by Amazon RDS, including:
+  * Automated Backups.
+  * Database Snapshots.
+  * Database Restoration.
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Understood the key factors affecting the operating costs of Amazon RDS and Amazon Lightsail, and learned how to choose the appropriate service based on different application requirements.
 
-* Used AWS CLI to perform basic operations such as:
+* Successfully deployed an Amazon Lightsail database and connected it to an application.
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+* Successfully deployed and configured sample applications on Amazon Lightsail, including:
+  * WordPress.
+  * PrestaShop.
+  * Akaunting.
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Learned the management and security features available in Amazon Lightsail, including:
+  * Firewall.
+  * Static IP.
+  * Snapshots.
+  * SSL/TLS.
+
+* Enhanced practical skills in deploying complete web applications on AWS, covering database provisioning, compute resources, application configuration, and security best practices.

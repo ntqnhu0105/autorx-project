@@ -1,57 +1,52 @@
 ---
 title: "Week 6 Worklog"
-date: 2024-01-01
+date: 2026-05-31
 weight: 1
 chapter: false
 pre: " <b> 1.6. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
 
 ### Week 6 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Become familiar with the AWS Command Line Interface (AWS CLI), including its installation and configuration process.
+* Use AWS CLI to manage common AWS services.
+* Practice automating AWS resource management tasks using the command line.
+* Develop troubleshooting skills, optimize AWS resources, and perform resource cleanup.
 
 ### Tasks to be carried out this week:
 | Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+| 2   | - Learn about the AWS Command Line Interface (AWS CLI) <br> - Become familiar with basic AWS CLI commands and configuration | 25/05/2026 | 25/05/2026 | <https://000011.awsstudygroup.com/> <https://000011.awsstudygroup.com/2-prerequiste/> |
+| 3   | - Install AWS CLI on a local machine <br> - **Hands-on Lab:** <br>&emsp;+ Configure AWS CLI <br>&emsp;+ Manage Amazon S3 using AWS CLI <br>&emsp;+ Upload, download, and manage objects | 26/05/2026 | 26/05/2026 | <https://000011.awsstudygroup.com/3-installcli/> <https://000011.awsstudygroup.com/4-infras/> <https://000011.awsstudygroup.com/5-s3/> |
+| 4   | - Learn how to use AWS CLI with various AWS services <br> - **Hands-on Lab:** <br>&emsp;+ Amazon SNS <br>&emsp;+ IAM <br>&emsp;+ Amazon VPC <br>&emsp;+ Perform management tasks using the command line | 27/05/2026 | 27/05/2026 | <https://000011.awsstudygroup.com/6-sns/> <https://000011.awsstudygroup.com/7-iam/> <https://000011.awsstudygroup.com/8-network/> |
+| 5   | - Learn how to manage Amazon CloudWatch resources using AWS CLI <br> - **Hands-on Lab:** <br>&emsp;+ Launch an Amazon EC2 instance using AWS CLI <br>&emsp;+ Monitor and manage EC2 instances from the command line | 28/05/2026 | 28/05/2026 | <https://000011.awsstudygroup.com/9-ec2/> |
+| 6   | - Review issues encountered during hands-on practice <br> - Troubleshoot configuration and permission errors <br> - Clean up AWS resources to avoid unnecessary charges | 29/05/2026 | 29/05/2026 | <https://000011.awsstudygroup.com/10-troubleshoot/> |
+| 7   | - Participate as a speaker at the Mini Meetup <br> - Present the topic **"Confidence"** and share personal experiences before starting the internship | 30/05/2026 | 30/05/2026 |
 
 ### Week 6 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Successfully installed and configured AWS CLI in the working environment.
 
-* Successfully created and configured an AWS Free Tier account.
+* Gained a solid understanding of AWS CLI command structure and syntax, and learned how to use the official AWS documentation as a reference.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* Successfully managed AWS resources using AWS CLI across multiple services, including:
+  * Amazon S3.
+  * Amazon SNS.
+  * IAM.
+  * Amazon VPC.
+  * Amazon EC2.
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Acquired the ability to deploy and manage Amazon EC2 instances entirely through the command line.
 
-* Used AWS CLI to perform basic operations such as:
+* Learned how to use AWS CLI together with Amazon CloudWatch to monitor and inspect AWS resources.
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+* Developed troubleshooting skills for common AWS CLI issues, including:
+  * Insufficient IAM permissions.
+  * Incorrect AWS Region configuration.
+  * Invalid credentials.
+  * Command syntax errors.
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Established the habit of cleaning up AWS resources after completing hands-on labs to optimize AWS costs.
+
+* Improved communication and public speaking skills by presenting the **"Confidence"** topic at the Mini Meetup and sharing personal experiences before the internship.

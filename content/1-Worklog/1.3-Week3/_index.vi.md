@@ -1,59 +1,52 @@
 ---
 title: "Worklog Tuần 3"
-date: 2024-01-01
+date: 2026-05-10
 weight: 1
 chapter: false
 pre: " <b> 1.3. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
 
 ### Mục tiêu tuần 3:
 
-* Kết nối, làm quen với các thành viên trong First Cloud Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Hiểu cách lưu trữ và quản lý dữ liệu trên Amazon S3.
+* Triển khai website tĩnh (Static Website) sử dụng Amazon S3.
+* Tìm hiểu các tính năng quản lý dữ liệu và tối ưu hiệu năng của Amazon S3.
+* Tham gia hoạt động giao lưu cộng đồng để mở rộng kiến thức và kết nối trong lĩnh vực AWS.
+
 
 ### Các công việc cần triển khai trong tuần này:
 | Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| 2   | - Tìm hiểu về Amazon S3 <br> - **Thực hành:** <br>&emsp;+ Tạo S3 Bucket <br>&emsp;+ Tải dữ liệu (Upload Object) lên Bucket <br>&emsp;+ Quản lý Object trong Bucket | 04/05/2026 | 04/05/2026 | <https://000057.awsstudygroup.com/> |
+| 3   | - Tìm hiểu cách triển khai Static Website Hosting trên Amazon S3 <br> - **Thực hành:** <br>&emsp;+ Bật Static Website Hosting <br>&emsp;+ Cấu hình Block Public Access <br>&emsp;+ Cấp quyền Public Read cho Object | 05/05/2026 | 05/05/2026 | <https://000057.awsstudygroup.com/> |
+| 4   | - Kiểm tra website đã triển khai <br> - Tìm hiểu Amazon CloudFront CDN <br> - **Thực hành:** <br>&emsp;+ Tăng tốc Static Website bằng CloudFront <br>&emsp;+ Kiểm tra khả năng truy cập và phân phối nội dung | 06/05/2026 | 06/05/2026 | <https://000057.awsstudygroup.com/> |
+| 5   | - Tìm hiểu Bucket Versioning <br> - **Thực hành:** <br>&emsp;+ Bật Versioning cho Bucket <br>&emsp;+ Quản lý phiên bản Object <br>&emsp;+ Di chuyển Object trong giao diện Amazon S3 | 07/05/2026 | 07/05/2026 | <https://000057.awsstudygroup.com/> |
+| 7   | - Tham gia **FCAJ Community Day** tại văn phòng AWS Vietnam <br> - Giao lưu, học hỏi và cập nhật các kiến thức, xu hướng mới về AWS từ cộng đồng | 09/05/2026 | 09/05/2026 | |
 
 
 ### Kết quả đạt được tuần 3:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Hiểu cách sử dụng Amazon S3 để lưu trữ và quản lý dữ liệu trên nền tảng AWS.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+* Triển khai thành công Static Website Hosting trên Amazon S3.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+* Nắm được cơ chế cấp quyền truy cập dữ liệu thông qua:
+  * Block Public Access.
+  * Bucket Policy.
+  * Public Object.
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+* Hiểu cách sử dụng Amazon CloudFront để:
+  * Phân phối nội dung qua CDN.
+  * Giảm độ trễ khi truy cập website.
+  * Tăng hiệu năng cho Static Website.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+* Biết cách quản lý phiên bản dữ liệu với S3 Versioning:
+  * Khôi phục phiên bản cũ.
+  * Quản lý nhiều phiên bản của Object.
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
+* Hiểu nguyên lý hoạt động của Cross-Region Replication và lợi ích trong việc sao lưu, tăng tính sẵn sàng và khả năng phục hồi dữ liệu.
 
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
+* Có thêm kiến thức thực tế và mở rộng kết nối thông qua việc tham gia **FCAJ Community Day** tại văn phòng AWS Vietnam.
 
 
