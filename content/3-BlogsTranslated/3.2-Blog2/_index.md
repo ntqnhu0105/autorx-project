@@ -1,126 +1,158 @@
 ---
 title: "Blog 2"
-date: 2024-01-01
+date: 2026-07-08
 weight: 1
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# Getting Started with Healthcare Data Lakes: Using Microservices
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
+# [Data Caching Across Microservices in a Serverless Architecture](https://aws.amazon.com/blogs/architecture/data-caching-across-microservices-in-a-serverless-architecture/)
 
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, *“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”*, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+Organizations are increasingly migrating from **monolithic architectures** to **microservices** to improve scalability, accelerate development, and deploy new features independently.
 
----
+However, as applications are divided into multiple microservices, a new challenge emerges: each service often needs to retrieve data from multiple sources such as databases, legacy systems, or shared services. As a result, every request may require several backend calls, increasing latency and placing additional load on source systems.
 
-## Architecture Guidance
-
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
-
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
-
-**The solution architecture is now as follows:**
-
-> *Figure 1. Overall architecture; colored boxes represent distinct services.*
+To address this challenge, AWS recommends deploying a **data cache** close to the microservices layer. This reduces the number of direct backend requests, improving application performance while lowering response latency.
 
 ---
 
-While the term *microservices* has some inherent ambiguity, certain traits are common:  
-- Small, autonomous, loosely coupled  
-- Reusable, communicating through well-defined interfaces  
-- Specialized to do one thing well  
-- Often implemented in an **event-driven architecture**
+## Why Do We Need a Data Cache?
 
-When determining where to draw boundaries between microservices, consider:  
-- **Intrinsic**: technology used, performance, reliability, scalability  
-- **Extrinsic**: dependent functionality, rate of change, reusability  
-- **Human**: team ownership, managing *cognitive load*
+A cache is a high-speed storage layer used to temporarily store frequently accessed data.
 
----
+Instead of querying the database or source system for every request, a microservice first attempts to retrieve data from the cache. Since cached data is typically stored in memory, it can be accessed much faster than querying backend systems directly.
 
-## Technology Choices and Communication Scope
+Using a cache provides several benefits:
 
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+- Reduces request latency.
+- Minimizes direct access to databases and backend systems.
+- Decreases backend load during traffic spikes.
+- Improves the scalability of the overall system.
+
+Depending on application requirements and data characteristics, AWS introduces two different caching strategies.
 
 ---
 
-## The Pub/Sub Hub
+## Use Case 1 – On-Demand Caching (Cache-Aside Pattern)
 
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.  
-- Each microservice depends only on the *hub*  
-- Inter-microservice connections are limited to the contents of the published message  
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous *push*
+![Blog2](/images/3-BlogsTranslated/Blog2_1.jpg)
 
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
+> *Figure 1. Reducing latency by caching frequently accessed data.*
 
----
+In the first scenario, AWS implements the **Cache-Aside Pattern**, also known as **Lazy Loading**.
 
-## Core Microservice
+The concept is simple: data is added to the cache only when it is requested.
 
-Provides foundational data and communication layer, including:  
-- **Amazon S3** bucket for data  
-- **Amazon DynamoDB** for data catalog  
-- **AWS Lambda** to write messages into the data lake and catalog  
-- **Amazon SNS** topic as the *hub*  
-- **Amazon S3** bucket for artifacts such as Lambda code
+The workflow is as follows:
 
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
+1. The Billing Service receives a client request.
+2. The service checks the cache using the object key.
+3. If the data exists (**Cache Hit**), it is returned immediately.
+4. If the data is not found (**Cache Miss**), the Billing Service retrieves it from the **System of Record**.
+5. The retrieved data is stored in the cache with a configured **Time-To-Live (TTL)**.
+6. Subsequent requests read directly from the cache instead of querying the backend.
 
----
-
-## Front Door Microservice
-
-- Provides an API Gateway for external REST interaction  
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**  
-- Self-managed *deduplication* mechanism using DynamoDB instead of SNS FIFO because:  
-  1. SNS deduplication TTL is only 5 minutes  
-  2. SNS FIFO requires SQS FIFO  
-  3. Ability to proactively notify the sender that the message is a duplicate  
+With this approach, only frequently accessed data is cached, significantly reducing the number of backend queries.
 
 ---
 
-## Staging ER7 Microservice
+## How AWS Implements Use Case 1
 
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute  
-- Step Functions Express Workflow to convert ER7 → JSON  
-- Two Lambdas:  
-  1. Fix ER7 formatting (newline, carriage return)  
-  2. Parsing logic  
-- Result or error is pushed back into the pub/sub hub  
+![Blog2](/images/3-BlogsTranslated/Blog2_2.jpg)
+
+> *Figure 2. AWS services used to implement the Cache-Aside Pattern.*
+
+To implement this architecture in a serverless environment, AWS uses the following services:
+
+- **Amazon API Gateway** receives client requests.
+- **AWS Lambda** hosts microservices such as Billing, Payment, and Profile.
+- **Amazon ElastiCache** provides an in-memory caching layer.
+- **Amazon EventBridge** distributes events between microservices.
+- **Cache Manager** updates or invalidates cached data whenever necessary.
+
+When data changes—for example, after a successful payment—the Payment Service publishes an event to EventBridge. The Cache Manager processes this event to update or invalidate the corresponding cache entry, preventing clients from receiving stale data.
 
 ---
 
-## New Features in the Solution
+## Limitations of the Cache-Aside Pattern
 
-### 1. AWS CloudFormation Cross-Stack References
-Example *outputs* in the core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+Although the Cache-Aside Pattern significantly reduces backend requests, it has an important limitation.
+
+If data in the source system is updated while the cached copy has not yet expired, users may still receive outdated information until the cache's TTL expires.
+
+For applications such as payment systems, banking, or customer management platforms, serving stale data may lead to business issues.
+
+To address this limitation, AWS introduces a second strategy.
+
+---
+
+## Use Case 2 – Event-Driven Cache Synchronization
+
+![Blog2](/images/3-BlogsTranslated/Blog2_3.jpg)
+
+> *Figure 3. Proactively populating and synchronizing the cache through events.*
+
+Unlike the Cache-Aside Pattern, this approach does not wait for the first request before populating the cache.
+
+Instead, data is proactively loaded into the cache through automated processes such as **Initial Load** or **Change Data Capture (CDC)**.
+
+Whenever data changes in the source system:
+
+1. The change is detected through the CDC pipeline.
+2. An event is published to the event store.
+3. The Cache Manager receives the event.
+4. The cache is immediately updated or invalidated.
+5. Microservices always read synchronized data directly from the cache.
+
+As a result, microservices rarely need to perform real-time queries against backend systems while still serving up-to-date data.
+
+---
+
+## How AWS Implements Use Case 2
+
+![Blog2](/images/3-BlogsTranslated/Blog2_4.jpg)
+
+> *Figure 4. AWS services used for proactive cache synchronization.*
+
+For this architecture, AWS replaces the caching layer with components better suited for larger datasets.
+
+The main services include:
+
+- **Amazon API Gateway** receives client requests.
+- **AWS Lambda** runs the microservices.
+- **Amazon DynamoDB** stores cached data persistently.
+- **Amazon DynamoDB Accelerator (DAX)** accelerates read operations through in-memory caching.
+- **Amazon EventBridge** distributes data change events.
+- **Cache Manager** synchronizes cached data in near real time.
+
+Compared to the first approach, this architecture is better suited for applications with large datasets or workloads that require continuously updated information.
+
+---
+
+## When Should You Use Each Strategy?
+
+AWS does not recommend a single caching strategy for every application.
+
+The **Cache-Aside Pattern** is ideal when:
+
+- Data is read frequently.
+- Data changes infrequently.
+- Simplicity and rapid implementation are priorities.
+
+In contrast, an **Event-Driven Cache** is more suitable when:
+
+- Data changes frequently.
+- Strong data consistency is required.
+- The application already follows an **Event-Driven Architecture**.
+- Large datasets make real-time backend queries impractical.
+
+---
+
+## Conclusion
+
+Data caching not only improves application performance but also significantly reduces the load on backend systems in a microservices architecture.
+
+As demonstrated by these two AWS approaches, each caching strategy addresses different application requirements. The **Cache-Aside Pattern** is simple and easy to implement, while the **Event-Driven Cache** is better suited for systems that require highly consistent, frequently updated data under heavy workloads.
+
+The key takeaway is not **whether to use caching**, but **choosing the caching strategy that best fits your application's characteristics and business requirements**.

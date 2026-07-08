@@ -7,7 +7,7 @@ pre: " <b> 3.1. </b> "
 ---
 
 
-# Latency-Based Routing: Leveraging Amazon CloudFront for a Multi-Region Active-Active Architecture
+# [Latency-Based Routing: Leveraging Amazon CloudFront for a Multi-Region Active-Active Architecture](https://aws.amazon.com/vi/blogs/networking-and-content-delivery/latency-based-routing-leveraging-amazon-cloudfront-for-a-multi-region-active-active-architecture/)
 
 Modern applications are increasingly deployed across multiple AWS Regions to improve availability and reduce latency for users around the world. However, deploying backend services in multiple Regions is only the first step. A greater challenge is ensuring that users are always connected to the most appropriate Region without changing the application's endpoint.
 

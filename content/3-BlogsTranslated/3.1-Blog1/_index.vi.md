@@ -7,7 +7,7 @@ pre: " <b> 3.1. </b> "
 ---
 
 
-# Xây dựng kiến trúc Multi-Region Active-Active với Amazon CloudFront
+# [Xây dựng kiến trúc Multi-Region Active-Active với Amazon CloudFront](https://aws.amazon.com/vi/blogs/networking-and-content-delivery/latency-based-routing-leveraging-amazon-cloudfront-for-a-multi-region-active-active-architecture/)
 
 Các ứng dụng hiện đại ngày càng được triển khai trên nhiều AWS Region nhằm tăng tính sẵn sàng và giảm độ trễ cho người dùng trên toàn cầu. Tuy nhiên, việc triển khai backend trên nhiều Region chỉ là bước đầu. Một trong những thách thức lớn hơn là làm thế nào để người dùng luôn được kết nối đến Region phù hợp nhất mà không cần thay đổi địa chỉ truy cập.
 

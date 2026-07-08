@@ -1,127 +1,156 @@
 ---
 title: "Blog 2"
-date: 2024-01-01
+date: 2026-07-08
 weight: 1
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+# [Data Caching Across Microservices trong kiến trúc Serverless](https://aws.amazon.com/blogs/architecture/data-caching-across-microservices-in-a-serverless-architecture/)
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+Các tổ chức đang dần chuyển đổi từ kiến trúc nguyên khối (Monolithic) sang **Microservices** để tăng khả năng mở rộng, phát triển nhanh hơn và triển khai các tính năng mới một cách độc lập.
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+Tuy nhiên, khi chia hệ thống thành nhiều microservice, một vấn đề mới xuất hiện: mỗi service thường phải lấy dữ liệu từ nhiều nguồn khác nhau như cơ sở dữ liệu, hệ thống legacy hoặc các dịch vụ dùng chung. Điều này khiến mỗi request phải thực hiện nhiều lời gọi đến backend, làm tăng độ trễ và tạo áp lực lớn lên hệ thống nguồn.
 
----
-
-## Hướng dẫn kiến trúc
-
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
-
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
-
-**Kiến trúc giải pháp bây giờ như sau:**
-
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
+Để giải quyết bài toán đó, AWS đề xuất sử dụng Data Cache đặt gần tầng Microservices nhằm giảm số lần truy cập trực tiếp đến backend, từ đó cải thiện hiệu năng và giảm độ trễ.
 
 ---
 
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
+## Tại sao cần Data Cache?
 
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
+Cache là một lớp lưu trữ tốc độ cao dùng để lưu tạm những dữ liệu được truy cập thường xuyên.
 
----
+Thay vì mỗi request đều truy vấn trực tiếp đến database hoặc hệ thống nguồn, microservice sẽ ưu tiên đọc dữ liệu từ Cache. Vì Cache thường được lưu trong bộ nhớ (memory), thời gian truy xuất nhanh hơn rất nhiều so với truy vấn trực tiếp đến backend.
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
+Việc sử dụng Cache mang lại nhiều lợi ích:
 
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+- Giảm độ trễ khi xử lý request.
+- Giảm số lần truy cập đến database hoặc hệ thống nguồn.
+- Giảm tải cho backend khi lưu lượng truy cập tăng cao.
+- Cải thiện khả năng mở rộng của toàn hệ thống.
 
----
+Tùy theo đặc điểm dữ liệu và yêu cầu của ứng dụng, AWS giới thiệu hai chiến lược triển khai Cache khác nhau.
 
-## The pub/sub hub
+## Use case 1 – Cache dữ liệu theo nhu cầu (Cache-Aside Pattern)
 
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
+![Blog2](/images/3-BlogsTranslated/Blog2_1.jpg)
 
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
+> *Hình 1. Giảm độ trễ bằng cách lưu Cache các dữ liệu thường xuyên được truy cập.*
 
----
+Trong kịch bản đầu tiên, AWS áp dụng **Cache-Aside Pattern**, hay còn gọi là **Lazy Loading**.
 
-## Core microservice
+Ý tưởng của mô hình này rất đơn giản: dữ liệu chỉ được lưu vào Cache khi có người dùng yêu cầu.
 
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
+Quy trình hoạt động gồm các bước:
 
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
+1. Billing Service nhận request từ người dùng.
+2. Service kiểm tra Cache bằng Object Key.
+3. Nếu Cache đã có dữ liệu (Cache Hit), kết quả được trả về ngay.
+4. Nếu Cache chưa có (Cache Miss), Billing Service truy vấn đến System of Record để lấy dữ liệu.
+5. Dữ liệu sau khi lấy về được lưu vào Cache với một khoảng thời gian sống (TTL).
+6. Những request tiếp theo sẽ đọc trực tiếp từ Cache thay vì truy cập backend.
+
+Nhờ vậy, chỉ những dữ liệu thực sự được sử dụng mới được lưu trong Cache, giúp giảm đáng kể số lần truy vấn đến hệ thống nguồn.
 
 ---
 
-## Front door microservice
+## AWS triển khai Use case 1 như thế nào?
 
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
+![Blog2](/images/3-BlogsTranslated/Blog2_2.jpg)
 
----
+> *Hình 2. Các dịch vụ AWS được sử dụng để triển khai Cache-Aside.*
 
-## Staging ER7 microservice
+Để hiện thực mô hình trên trong môi trường Serverless, AWS sử dụng các dịch vụ sau:
 
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
+- **Amazon API Gateway** tiếp nhận request từ client.
+AWS Lambda triển khai các Microservices như Billing, Payment và Profile.
+- **Amazon ElastiCache** đóng vai trò lớp Cache lưu dữ liệu trong bộ nhớ.
+- **Amazon EventBridge** truyền các sự kiện giữa các microservice.
+- **Cache Manager** chịu trách nhiệm cập nhật hoặc xóa dữ liệu trong Cache khi cần.
+
+Khi dữ liệu thay đổi (ví dụ người dùng thanh toán thành công), Payment Service sẽ phát sinh một sự kiện gửi đến EventBridge. Cache Manager nhận sự kiện này để xóa hoặc cập nhật dữ liệu tương ứng trong Cache, giúp tránh việc người dùng đọc phải dữ liệu cũ.
 
 ---
 
-## Tính năng mới trong giải pháp
+## Hạn chế của Cache-Aside Pattern
 
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+Mặc dù Cache-Aside giúp giảm đáng kể số lần truy cập backend, mô hình này vẫn tồn tại một hạn chế.
+
+Nếu dữ liệu trong hệ thống nguồn vừa được cập nhật nhưng bản sao trong Cache vẫn chưa hết thời gian sống (TTL), người dùng vẫn có thể nhận được dữ liệu cũ.
+
+Đối với các hệ thống như thanh toán, tài khoản ngân hàng hoặc quản lý khách hàng, việc sử dụng dữ liệu cũ có thể gây ảnh hưởng đến nghiệp vụ.
+
+Đó là lý do AWS giới thiệu chiến lược thứ hai.
+
+---
+
+## Use case 2 – Chủ động đồng bộ Cache bằng Event
+
+![Blog2](/images/3-BlogsTranslated/Blog2_3.jpg)
+
+> *Hình 3. Chủ động nạp dữ liệu vào Cache và đồng bộ bằng sự kiện.*
+
+Khác với Cache-Aside, mô hình này không đợi request đầu tiên mới tạo Cache.
+
+Ngay từ đầu, dữ liệu đã được nạp vào Cache thông qua các tiến trình tự động như **Initial Load** hoặc **Change Data Capture (CDC)**.
+
+Khi dữ liệu trong hệ thống nguồn thay đổi:
+
+1. Thay đổi được ghi nhận thông qua CDC Pipeline.
+2. Một sự kiện được gửi đến Event Store.
+3. Cache Manager nhận sự kiện.
+4. Cache được cập nhật hoặc xóa ngay lập tức.
+5. Các Microservices luôn đọc dữ liệu đã được đồng bộ sẵn trong Cache.
+
+Nhờ vậy, Microservices gần như không cần thực hiện các lời gọi thời gian thực đến hệ thống nguồn mà vẫn đảm bảo dữ liệu luôn được cập nhật.
+
+---
+
+## AWS triển khai Use case 2 như thế nào?
+
+![Blog2](/images/3-BlogsTranslated/Blog2_4.jpg)
+
+> *Hình 4. Các dịch vụ AWS được sử dụng để triển khai Cache chủ động.*
+
+Trong kiến trúc này, AWS thay đổi lớp Cache để phù hợp với khối lượng dữ liệu lớn.
+
+Các thành phần chính bao gồm:
+
+- **Amazon API Gateway** tiếp nhận request.
+- **AWS Lambda** triển khai các Microservices.
+- **Amazon DynamoDB** lưu trữ dữ liệu Cache lâu dài.
+- **DynamoDB Accelerator (DAX)** tăng tốc các truy vấn đọc bằng cơ chế In-memory Cache.
+- **Amazon EventBridge** truyền các sự kiện thay đổi dữ liệu.
+- **Cache Manager** đồng bộ Cache gần như theo thời gian thực.
+
+So với Use case đầu tiên, mô hình này phù hợp hơn với những hệ thống có lượng dữ liệu lớn hoặc yêu cầu dữ liệu luôn được cập nhật liên tục.
+
+---
+
+## Khi nào nên sử dụng từng chiến lược?
+
+AWS không khuyến nghị một giải pháp duy nhất cho mọi hệ thống.
+
+**Cache-Aside Pattern** phù hợp khi:
+
+- Dữ liệu chủ yếu được đọc.
+- Dữ liệu ít thay đổi.
+- Muốn triển khai nhanh và đơn giản.
+
+Trong khi đó, **Event-Driven Cache** phù hợp khi:
+
+- Dữ liệu thay đổi thường xuyên.
+- Yêu cầu tính nhất quán cao.
+- Hệ thống sử dụng kiến trúc hướng sự kiện (Event-Driven Architecture).
+- Khối lượng dữ liệu lớn và không thể truy vấn backend theo thời gian thực.
+
+---
+
+## Kết luận
+
+Data Cache không chỉ giúp tăng tốc ứng dụng mà còn giảm tải đáng kể cho hệ thống backend trong kiến trúc Microservices.
+
+Qua hai mô hình được AWS giới thiệu, có thể thấy mỗi chiến lược đều phục vụ một nhu cầu khác nhau. Cache-Aside đơn giản và dễ triển khai, trong khi Event-Driven Cache phù hợp với những hệ thống yêu cầu dữ liệu luôn mới và có lưu lượng truy cập lớn.
+
+Điều quan trọng không phải là **có sử dụng Cache hay không, mà là lựa chọn chiến lược Cache phù hợp với đặc điểm của ứng dụng**. Đó cũng là thông điệp chính mà AWS muốn truyền tải trong bài viết này.

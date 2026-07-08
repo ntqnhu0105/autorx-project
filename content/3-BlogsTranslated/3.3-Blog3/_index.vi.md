@@ -1,127 +1,155 @@
 ---
 title: "Blog 3"
-date: 2024-01-01
+date: 2026-07-08
 weight: 1
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+# [Tối ưu hạ tầng AWS cho tính bền vững – Phần III: Networking](https://aws.amazon.com/blogs/architecture/optimizing-your-aws-infrastructure-for-sustainability-part-iii-networking/)
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+Khi nói đến tối ưu hạ tầng trên AWS, nhiều người thường tập trung vào việc lựa chọn loại EC2 phù hợp, tối ưu cơ sở dữ liệu hoặc giảm dung lượng lưu trữ.
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+Tuy nhiên, một yếu tố khác cũng ảnh hưởng trực tiếp đến hiệu năng, chi phí và mức tiêu thụ tài nguyên là **Network**.
 
----
+Mỗi request của người dùng đều cần truyền dữ liệu qua mạng. Khoảng cách truyền càng xa, lượng dữ liệu càng lớn thì càng tiêu tốn nhiều tài nguyên mạng hơn. Điều này không chỉ làm tăng độ trễ mà còn khiến chi phí truyền dữ liệu (Data Transfer) tăng theo.
 
-## Hướng dẫn kiến trúc
-
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
-
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
-
-**Kiến trúc giải pháp bây giờ như sau:**
-
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
+Trong phần thứ ba của chuỗi bài viết về **Optimizing your AWS Infrastructure for Sustainability**, AWS tập trung vào việc tối ưu tầng Networking, đồng thời giới thiệu các nguyên tắc và dịch vụ giúp giảm lượng dữ liệu truyền qua mạng, cải thiện hiệu năng và xây dựng hệ thống bền vững hơn.
 
 ---
 
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
+## Vì sao cần tối ưu Networking?
 
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
+Khác với Compute hay Storage, tầng Network thường ít được chú ý trong quá trình thiết kế hệ thống.
 
----
+Tuy nhiên, mọi dữ liệu giữa người dùng và ứng dụng đều phải đi qua mạng. Khi số lượng người dùng tăng hoặc dữ liệu ngày càng lớn, lượng tài nguyên mạng tiêu thụ cũng tăng theo.
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
+AWS cho rằng tối ưu Network không chỉ giúp:
 
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+- Giảm độ trễ (Latency)
+- Giảm lượng Data Transfer
+- Cải thiện trải nghiệm người dùng
+- Giảm chi phí vận hành
+
+mà còn góp phần sử dụng tài nguyên hiệu quả hơn, từ đó giảm tác động đến môi trường.
 
 ---
 
-## The pub/sub hub
+## AWS đề xuất tối ưu Networking theo hai hướng
 
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
+Theo AWS, việc tối ưu tầng mạng nên tập trung vào hai mục tiêu chính:
 
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
+### 1. Giảm quãng đường dữ liệu phải truyền
+ Đưa dữ liệu đến gần người dùng nhất có thể để giảm thời gian truyền tải.
 
----
+ Ví dụ:
+ - Chọn AWS Region gần phần lớn người dùng.
+ - Sử dụng nhiều Region nếu ứng dụng phục vụ người dùng toàn cầu.
+ - Sử dụng CDN để phân phối nội dung.
 
-## Core microservice
+### 2. Giảm kích thước dữ liệu cần truyền
+ Bên cạnh việc rút ngắn khoảng cách truyền, AWS cũng khuyến nghị giảm lượng dữ liệu gửi qua mạng bằng cách:
 
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
+ - Nén dữ liệu (Gzip, Brotli)
+ - Chỉ trả về dữ liệu thực sự cần thiết
+ - Cache nội dung tĩnh
+ - Tối ưu payload của API
 
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
-
----
-
-## Front door microservice
-
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
+ Hai nguyên tắc này giúp giảm đáng kể tài nguyên mạng cần sử dụng cho mỗi request.
 
 ---
 
-## Staging ER7 microservice
+## Đưa dữ liệu đến gần người dùng hơn bằng CloudFront
 
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
+![Blog3](/images/3-BlogsTranslated/Blog3_1.jpg)
+
+> *Hình 1. So sánh truy cập trực tiếp đến Amazon S3 và truy cập thông qua Amazon CloudFront.*
+
+Hình đầu tiên minh họa hai cách người dùng truy cập dữ liệu.
+
+Ở phía bên trái, tất cả người dùng trên thế giới đều gửi request trực tiếp đến một **Amazon S3 Bucket** đặt tại một Region AWS.
+
+Điều này đồng nghĩa với việc:
+
+Request phải truyền quãng đường rất xa.
+Origin Server xử lý toàn bộ lưu lượng truy cập.
+Độ trễ tăng lên khi người dùng ở xa Region.
+Chi phí Data Transfer cao hơn.
+
+Ở phía bên phải, AWS sử dụng **Amazon CloudFront**.
+
+CloudFront lưu bản sao dữ liệu tại các **Edge Location** và **Regional Edge Cache** trên toàn cầu.
+
+Khi người dùng gửi request:
+
+- CloudFront sẽ kiểm tra dữ liệu đã tồn tại trong Edge Cache hay chưa.
+- Nếu có, dữ liệu được trả về ngay từ điểm gần người dùng nhất.
+- Chỉ khi Cache không có dữ liệu, CloudFront mới truy cập đến Origin để lấy dữ liệu.
+
+Nhờ vậy:
+
+- Giảm khoảng cách truyền dữ liệu.
+- Giảm độ trễ.
+- Giảm số lượng request đến Origin.
+- Tiết kiệm băng thông và chi phí truyền dữ liệu.
+- Tăng khả năng mở rộng của hệ thống.
+
+Đây cũng là lý do CloudFront không chỉ là một CDN mà còn là một công cụ giúp tối ưu hiệu năng và tính bền vững của hạ tầng AWS.
 
 ---
 
-## Tính năng mới trong giải pháp
+## Theo dõi hệ thống để biết nên tối ưu ở đâu
 
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+![Blog3](/images/3-BlogsTranslated/Blog3_2.jpg)
+
+> *Hình 2. CloudWatch và Trusted Advisor hỗ trợ giám sát các thành phần trong hệ thống.*
+
+Sau khi tối ưu Network, câu hỏi tiếp theo là:
+
+**Làm thế nào biết hệ thống đã thực sự được tối ưu?**
+
+AWS đề xuất kết hợp **Amazon CloudWatch** và **AWS Trusted Advisor** để theo dõi và đánh giá toàn bộ hạ tầng.
+
+Trong kiến trúc này:
+
+- Các dịch vụ Compute như **Amazon EC2**, **Amazon ECS** và **Amazon EMR** gửi các chỉ số hoạt động đến CloudWatch.
+- Các dịch vụ Storage như **Amazon S3**, **Amazon EBS**, **Amazon EFS** và **Amazon FSx** cũng cung cấp các chỉ số về lưu lượng và mức sử dụng tài nguyên.
+- **Amazon CloudFront** gửi các chỉ số như Cache Hit Ratio, lưu lượng truy cập và độ trễ.
+
+CloudWatch đóng vai trò thu thập và hiển thị toàn bộ các chỉ số này.
+
+Trong khi đó, **AWS Trusted Advisor** sẽ phân tích dữ liệu và đưa ra các khuyến nghị như:
+
+- Có nên sử dụng CloudFront cho S3 hay không.
+- Bucket nào đang truyền quá nhiều dữ liệu trực tiếp.
+- Thành phần nào có thể tối ưu để giảm lưu lượng mạng.
+- Những cơ hội giúp giảm chi phí và cải thiện hiệu năng.
+
+Thay vì tối ưu theo cảm tính, doanh nghiệp có thể dựa trên số liệu thực tế để đưa ra quyết định chính xác hơn.                      |
+
+---
+
+## Những khuyến nghị khác từ AWS
+
+Ngoài việc sử dụng CloudFront, AWS cũng đưa ra một số khuyến nghị giúp giảm lưu lượng truyền qua mạng:
+
+- Chọn AWS Region gần phần lớn người dùng.
+- Sử dụng nhiều Region nếu ứng dụng phục vụ khách hàng toàn cầu.
+- Nén dữ liệu trước khi truyền bằng Gzip hoặc Brotli.
+- Giảm kích thước payload của API.
+- Cache phản hồi API khi phù hợp.
+- Theo dõi thường xuyên các chỉ số mạng bằng CloudWatch.
+- Sử dụng Trusted Advisor để phát hiện các cơ hội tối ưu.
+
+Mặc dù mỗi thay đổi có thể chỉ cải thiện một phần nhỏ, nhưng khi kết hợp lại sẽ tạo ra khác biệt đáng kể về hiệu năng, chi phí và mức sử dụng tài nguyên.
+
+---
+
+## Kết luận
+
+Networking không chỉ là lớp kết nối giữa người dùng và ứng dụng mà còn ảnh hưởng trực tiếp đến hiệu năng, chi phí và khả năng mở rộng của toàn bộ hệ thống.
+
+Qua bài viết này, AWS nhấn mạnh rằng việc tối ưu Network không đơn thuần là giảm độ trễ, mà còn là sử dụng tài nguyên mạng hiệu quả hơn thông qua các kỹ thuật như đưa dữ liệu đến gần người dùng, giảm lượng dữ liệu truyền tải và liên tục theo dõi các chỉ số vận hành.
+
+Đó cũng là một trong những nguyên tắc quan trọng để xây dựng kiến trúc AWS vừa **hiệu quả, tiết kiệm chi phí và bền vững** trong dài hạn.
