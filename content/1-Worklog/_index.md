@@ -29,4 +29,4 @@ pre: " <b> 1. </b> "
 
 **Week 11:** [Developing Serverless Applications and Integrating User Authentication on AWS](1.11-week11/)
 
-**Week 12:** [Doing task N...](1.12-week12/)
+**Week 12:** [Finalizing the System, Summarizing Results, and Completing the Internship](1.12-week12/)

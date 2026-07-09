@@ -29,4 +29,4 @@ pre: " <b> 1. </b> "
 
 **Tuần 11:** [Phát triển ứng dụng Serverless và tích hợp xác thực người dùng trên AWS](1.11-week11/)
 
-**Tuần 12:** [Làm công việc N...](1.12-week12/)
+**Tuần 12:** [Hoàn thiện hệ thống, tổng hợp kết quả và kết thúc kỳ thực tập](1.12-week12/)
